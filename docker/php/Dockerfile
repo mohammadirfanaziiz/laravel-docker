@@ -17,7 +17,9 @@ COPY docker/php/apache.conf /etc/apache2/sites-available/000-default.conf
 
 # Salin entrypoint (init.sh)
 COPY docker/php/init.sh /usr/local/bin/init.sh
-RUN chmod +x /usr/local/bin/init.sh
+
+# 🔥 FIX CRLF → otomatis ubah ke LF + bikin executable
+RUN sed -i 's/\r$//' /usr/local/bin/init.sh && chmod +x /usr/local/bin/init.sh
 
 # Jalankan init.sh saat container start
 ENTRYPOINT ["/usr/local/bin/init.sh"]
